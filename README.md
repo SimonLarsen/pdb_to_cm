@@ -2,7 +2,7 @@ pdb\_to\_cm
 ===========
 
 Simple Python script for computing protein contact maps from PDB files as described in Godzik and Skolnick, (1994).
-An edge is added between all non-adjacent pairs of amino acids where the euclidean distance between their alpha carbon's are less then some threshold.
+An edge is added between all non-adjacent pairs of amino acids where the euclidean distance between their alpha carbons are less then some threshold.
 
 ## Usage
 
