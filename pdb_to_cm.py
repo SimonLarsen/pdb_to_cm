@@ -48,7 +48,7 @@ def main():
     parser = argparse.ArgumentParser(description="Computes protein contact map from PDB file.")
     parser.add_argument("pdb_file", type=str, help="PDB input file.")
     parser.add_argument("output_file", type=str, help="File to write contact map to.")
-    parser.add_argument("-t", "--threshold", type=float, required=False, default=7.5, help="Contact distance threshold in ångström.")
+    parser.add_argument("-t", "--threshold", type=float, required=False, default=7.5, help="Contact distance threshold in angstrom.")
     args = parser.parse_args()
 
     contacts = pdb_to_cm(open(args.pdb_file, "r"), args.threshold)
