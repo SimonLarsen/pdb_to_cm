@@ -11,10 +11,9 @@ def dist(p1, p2):
     return math.sqrt(dx**2 + dy**2 + dz**2)
 
 
-def read_atoms(path):
-    f = open(path, "r")
+def read_atoms(file):
     atoms = []
-    for line in f:
+    for line in file:
         line = line.strip()
         if line.startswith("ATOM"):
             type = line[12:16].strip()
@@ -23,7 +22,6 @@ def read_atoms(path):
                 y = float(line[38:46].strip())
                 z = float(line[46:54].strip())
                 atoms.append((x, y, z))
-    f.close()
     return atoms
 
 
@@ -36,11 +34,14 @@ def compute_contacts(atoms, threshold):
     return contacts
 
 
-def write_output(contacts, path):
-    f = open(path, "w")
+def write_output(contacts, file):
     for c in contacts:
-        f.write("\t".join(map(str, c))+"\n")
-    f.close()
+        file.write("\t".join(map(str, c))+"\n")
+
+
+def pdb_to_cm(file, threshold):
+    atoms = read_atoms(file)
+    return compute_contacts(atoms, threshold)
 
 
 def main():
@@ -50,9 +51,8 @@ def main():
     parser.add_argument("-t", "--threshold", type=float, required=False, default=7.5, help="Contact distance threshold in ångström.")
     args = parser.parse_args()
 
-    atoms = read_atoms(args.pdb_file)
-    contacts = compute_contacts(atoms, args.threshold)
-    write_output(contacts, args.output_file)
+    contacts = pdb_to_cm(open(args.pdb_file, "r"), args.threshold)
+    write_output(contacts, open(args.output_file, "w"))
 
 if __name__ == '__main__':
     main()
